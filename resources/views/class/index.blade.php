@@ -17,11 +17,13 @@
         <div class="row breadcrumbs-top">
           <div class="col-12">
             <h2 class="content-header-title float-left mb-0">Class
-              <img class="align-text width=" 15px" height="15px"" src=" {{asset('assets\images\icons\popovers.png')}}" alt="Card image cap" data-toggle="popover" data-placement="top" data-content="Halaman ini menampilkan daftar kelas yang tersedia di dalam sistem." />
+              <img class="align-text width=" 15px" height="15px"" src=" {{asset('assets\images\icons\popovers.png')}}"
+                alt="Card image cap" data-toggle="popover" data-placement="top"
+                data-content="Halaman ini menampilkan daftar kelas yang tersedia di dalam sistem." />
             </h2>
             <div class="breadcrumb-wrapper">
               <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/">Home</a>
+                <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Home</a>
                 </li>
                 <li class="breadcrumb-item active">Class List
                 </li>
@@ -44,38 +46,39 @@
       </div>
       @endif
       <div class="row">
-        @can ('create-class')
-          <div class="col-12 mb-1">
-            <a href="{{route('class.create')}}" class="create-new btn btn-primary createNewClass">Add Class</a>
-          </div>
-        @endcan
+        {{-- @can ('create-class')
+        <div class="col-12 mb-1">
+          <a href="{{route('class.create')}}" class="create-new btn btn-primary createNewClass">Add Class</a>
       </div>
-      
-      <!-- Basic table -->
-      <section id="basic-datatable">
-        <div class="row">
-          <div class="col-12">
-            <div class="card style=" border-radius: 15px;>
-              <table class="datatables-basic table yajra-datatable-class">
-                <thead>
-                  <tr>
-                    <th>No</th>
-                    <th>Class Name</th>
-                    <th>Coach Name</th>
-                    <th>Status</th>
-                    @can('detail-class')<th>Action</th>@endcan
-                  </tr>
-                </thead>
-                <tbody>
-                </tbody>
-              </table>
-            </div>
+      @endcan --}}
+    </div>
+
+    <!-- Basic table -->
+    <section id="basic-datatable">
+      <div class="row">
+        <div class="col-12">
+          <div class="card style=" border-radius: 15px;>
+            <table class="datatables-basic table yajra-datatable-class">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  {{-- <th>Class Name</th> --}}
+                  <th>Coach Name</th>
+                  <th>Total Client</th>
+                  {{-- <th>Status</th> --}}
+                  @can('detail-class')<th>Action</th>@endcan
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
           </div>
         </div>
-      </section>
-      <!--/ Basic table -->
-    </div>
+      </div>
+    </section>
+    <!--/ Basic table -->
   </div>
+</div>
 </div>
 <!-- END: Content-->
 @endsection
@@ -97,6 +100,50 @@
       }
     });
 
+    // var table = $('.yajra-datatable-class').DataTable({
+    //   processing: true,
+    //   serverSide: true,
+    //   ajax: "",
+    //   columns: [{
+    //       data: 'DT_RowIndex',
+    //       name: 'DT_RowIndex'
+    //     },
+    //     {
+    //       data: 'class_name',
+    //       name: 'class_name'
+    //     },
+    //     {
+    //       data: 'coach.name',
+    //       name: 'coach.name'
+    //     },
+    //     {
+    //       data: 'participant',
+    //       name: 'participant'
+    //     },
+    //     {
+    //       data: 'status',
+    //       name: 'status'
+    //     },
+    //     @can('detail-class') {
+    //       data: 'action',
+    //       name: 'action',
+    //       orderable: true,
+    //       searchable: true
+    //     },
+    //     @endcan
+    //   ],
+    //   dom: '<"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+    //   language: {
+    //     paginate: {
+    //       // remove previous & next text from pagination
+    //       previous: '&nbsp;',
+    //       next: '&nbsp;'
+    //     },
+    //     search: "<i data-feather='search'></i>",
+    //     searchPlaceholder: "Search records"
+    //   }
+    // });
+
     var table = $('.yajra-datatable-class').DataTable({
       processing: true,
       serverSide: true,
@@ -106,19 +153,14 @@
           name: 'DT_RowIndex'
         },
         {
-          data: 'class_name',
-          name: 'class_name'
+          data: 'user.name',
+          name: 'user.name'
         },
         {
-          data: 'coach.name',
-          name: 'coach.name'
+          data: 'Total Client',
+          name: 'Total Client'
         },
-        {
-          data: 'status',
-          name: 'status'
-        },
-        @can ('detail-class')
-        {
+        @can('detail-class') {
           data: 'action',
           name: 'action',
           orderable: true,
@@ -137,8 +179,6 @@
         searchPlaceholder: "Search records"
       }
     });
-
-
   });
 </script>
 @endpush

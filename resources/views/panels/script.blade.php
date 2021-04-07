@@ -28,7 +28,8 @@
 </script>
 
 @elseif (in_array(Route::currentRouteName(), ['clients.index', 'plans.index', 'agendas.index', 'clients.show',
-'plans.show', 'dashboard','roles.index','permissions.index','users.index', 'class.index', 'class.show']))
+'plans.show', 'dashboard','roles.index','agendas.show_group','permissions.index','users.index', 'class.index', 'class.show',
+'profil','auth.register', 'group.show', 'docs.index']))
 
 
 <!-- BEGIN: Vendor JS-->
@@ -48,9 +49,9 @@
 <script src="{{ asset('assets/vendors/js/tables/datatable/buttons.html5.min.js')}}"></script>
 <script src="{{ asset('assets/vendors/js/tables/datatable/buttons.print.min.js')}}"></script>
 <script src="{{ asset('assets/vendors/js/tables/datatable/dataTables.rowGroup.min.js')}}"></script>
-<!--
-    <script src="{{ asset('assets/vendors/js/pickers/flatpickr/flatpickr.min.js')}}"></script>
-	-->
+<script src="{{ asset('assets/vendors/js/pickers/flatpickr/flatpickr.min.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+
 <!-- END: Page Vendor JS-->
 
 <!-- BEGIN: Theme JS-->
@@ -76,6 +77,26 @@
 
 </script>
 
+<script>
+    $(document).ready(function() {
+        if (window.localStorage.getItem("theme") != null) {
+            var tm = window.localStorage.getItem("theme");
+            if (tm === "true") {
+              $('body').addClass("dark-layout");
+              $('nav').removeClass('navbar-light').addClass('navbar-dark');
+              $('.main-menu').removeClass('menu-light').addClass('menu-dark');
+              $('#ic.ficon').replaceWith(feather.icons['sun'].toSvg({ class: 'ficon' }));
+            }
+        }
+
+        $(".nav-link-style").click(function() {
+            var v = $(".dark-layout").is(":visible")
+            window.localStorage.setItem("theme", v)
+        });
+
+    });
+</script>
+
 @else
 
 <!-- BEGIN: Vendor JS-->
@@ -83,8 +104,8 @@
 <!-- BEGIN Vendor JS-->
 
 <!-- BEGIN: Page Vendor JS-->
-<script src="{{ asset('assets/vendors/js/charts/apexcharts.min.js')}}"></script>
-<script src="{{ asset('assets/vendors/js/extensions/toastr.min.js')}}"></script>
+{{-- <script src="{{ asset('assets/vendors/js/charts/apexcharts.min.js')}}"></script> --}}
+{{-- <script src="{{ asset('assets/vendors/js/extensions/toastr.min.js')}}"></script> --}}
 <!-- END: Page Vendor JS-->
 
 <!-- BEGIN: Theme JS-->
@@ -93,7 +114,7 @@
 <!-- END: Theme JS-->
 
 <!-- BEGIN: Page JS-->
-<script src="{{ asset('assets/js/scripts/pages/dashboard-ecommerce.js')}}"></script>
+{{-- <script src="{{ asset('assets/js/scripts/pages/dashboard-ecommerce.js')}}"></script> --}}
 <!-- END: Page JS-->
 
 <script>

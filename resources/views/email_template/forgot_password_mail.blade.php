@@ -18,7 +18,7 @@
     }
 
     .button {
-      background-color: #7367F0;
+      background-color: #F1AF33;
       /* Green */
       border: none;
       color: white;
@@ -185,7 +185,7 @@
             </td>
           </tr>
           <tr>
-            <td background="http://pentagram-it.com/demo4/img/belanjaac.png" bgcolor="#D5D2FA" valign="top" style="background: url(http://pentagram-it.com/demo4/img/belanjaac.png) no-repeat center; background-color: #D5D2FA; background-position: center;">
+            <td background="http://pentagram-it.com/demo4/img/belanjaac.png" bgcolor="#D5D2FA" valign="top" style="background: url(http://pentagram-it.com/demo4/img/belanjaac.png) no-repeat center; background-color: #FCE8C3; background-position: center;">
               <!--[if gte mso 9]>
           <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="mso-width-percent:1000;height:303px;">
             <v:fill type="tile" src="https://www.filepicker.io/api/file/kmlo6MonRpWsVuuM47EG" color="#8b8284" />
@@ -200,8 +200,8 @@
                         <table cellspacing="0" cellpadding="0" width="100%">
                           <tr>
                             <td style=" text-align:center;">
-                              <h1 style="color: #A470BC;">FORGOT</h1>
-                              <h2 style="color: #A470BC;">YOUR PASSWORD?</h2>
+                              <h1 style="color: #FFA600;">FORGOT</h1>
+                              <h2 style="color: #FFA600;">YOUR PASSWORD?</h2>
                               <br>
                               <br>
                             </td>
@@ -276,7 +276,7 @@
                           </td>
                         </tr>
                         <tr>
-                          <td style="padding-bottom: 30px;" class="mobile-padding">
+                          <td style="padding-bottom: 30px;text-align:center" class="mobile-padding">
 
                             <table class="force-full-width" cellspacing="0" cellpadding="0">
                               <tr>
@@ -295,10 +295,9 @@
                             <table cellspacing="0" cellpadding="0" width="100%">
                               <tr>
                                 <td style="text-align: left;">
-                                  If you are having trouble resetting your password, please contact us via
-                                  <br>
-                                  email <a href="https://mail.google.com/mail/u/0/#inbox?compose=CllgCJZdjtXMLCzXZJhvLlxSMhgZZgkCdPTltDMhFmjLSmzsjxLwncvlSPTzgnCJlmhpvrtCcvq">halo@cataliz.id</a>
-                                  or No. Phone +62 822-3585-0005
+                                  For further information, please contact email <a href="https://mail.google.com/mail/u/0/#inbox?compose=CllgCJZdjtXMLCzXZJhvLlxSMhgZZgkCdPTltDMhFmjLSmzsjxLwncvlSPTzgnCJlmhpvrtCcvq">halo@cataliz.id</a>
+                                  or +62 822-3585-0005
+                                  on Monday - Friday 09:00 - 18:00 WIB.
                                   <br>
                                   <br>
                                 </td>
@@ -316,11 +315,11 @@
                     <td>
                       <table cellspacing="0" cellpadding="0" width="100%">
                         <tr>
-                          <td class="mobile-padding" style="text-align:right;">
+                          <td class="mobile-padding" style="text-align:left;">
                             <br>
                             Thank you
                             <br>
-                            Cataliz.id - 2021
+                            Cataliz.id - {{ Carbon\Carbon::now()->year }}
                             <br>
                             <br>
                             <br>
@@ -340,29 +339,11 @@
                   <tr>
                     <td>
                       <table cellspacing="0" cellpadding="30" width="100%">
-                        <tr>
-                          <td>
+                        <tr style="text-align: center;">
+                          <td style="">
                             <a href="https://www.instagram.com/cataliz.id/">
                               <img src="{{ $message->embed(public_path().'/assets/images/icons/email/instagram.png') }}">
                             </a>
-                          </td>
-                          <td>
-                            <a href="#">
-                              <img src="{{ $message->embed(public_path().'/assets/images/icons/email/facebook.png') }}">
-                            </a>
-                          </td>
-                          <td>
-                            <a href="#">
-                              <img src="{{ $message->embed(public_path().'/assets/images/icons/email/twitter.png') }}">
-
-                            </a>
-                          </td>
-                          <td>
-                            <a href="#">
-                              <img src="{{ $message->embed(public_path().'/assets/images/icons/email/youtube.png') }}">
-                            </a>
-                          </td>
-                          <td>
                             <a href="https://cataliz.id/">
                               <img src="{{ $message->embed(public_path().'/assets/images/icons/email/link.png') }}">
                             </a>
@@ -375,9 +356,9 @@
                     <td>
                       <center>
                         <table style="margin:0 auto;" cellspacing="0" cellpadding="5" width="100%">
-                          <tr>
+                          <tr style="font-size: 10px;">
                             <td style="text-align:center; margin:0 auto;" width="100%">
-                              <p style="color: #ffffff;">
+                              <p style="color: #ffffff;">COPYRIGHT &copy; {{ Carbon\Carbon::now()->year }}
                                 Cataliz.id. All Right Reserved
                               </p>
 

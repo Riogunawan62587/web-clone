@@ -10,6 +10,7 @@ use App\Models\Client;
 use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class ProfileController extends Controller
 {
@@ -17,17 +18,26 @@ class ProfileController extends Controller
     {
         if (auth()->user()->hasRole('admin')) {
             $user = User::where('id', Auth::user()->id)->first();
-            return view('profile.index', compact('user'));
+            $contents = Storage::disk('s3')->url('images/profil_picture/' . $user->profil_picture);
+            $contents_bg = Storage::disk('s3')->url('images/background_picture/' . $user->background_picture);
+
+            return view('profile.index', compact('user', 'contents'));
         } elseif (auth()->user()->hasRole('coachee')) {
             $user = User::select('*')
                 ->join('clients', 'user_id', '=', 'users.id')
                 ->where('users.id', Auth::user()->id)
                 ->first();
-            // return Auth::user()->password;
-            return view('profile.index', compact('user'));
+
+            $contents = Storage::disk('s3')->url('images/profil_picture/' . $user->profil_picture);
+            $contents_bg = Storage::disk('s3')->url('images/background_picture/' . $user->background_picture);
+
+            return view('profile.index', compact('user', 'contents'));
         } else {
             $user = User::where('id', Auth::user()->id)->first();
-            return view('profile.index', compact('user'));
+            $contents = Storage::disk('s3')->url('images/profil_picture/' . $user->profil_picture);
+            $contents_bg = Storage::disk('s3')->url('images/background_picture/' . $user->background_picture);
+
+            return view('profile.index', compact('user', 'contents', 'contents_bg'));
         }
     }
 
@@ -41,7 +51,7 @@ class ProfileController extends Controller
 
         User::find(auth()->user()->id)->update(['password' => Hash::make($request->new_password)]);
 
-        return redirect(route('profil', Auth::user()->id))->with('success', 'Password berhasil diubah!');
+        return redirect(route('profil', Auth::user()->id))->with('success', 'Your Password has been updated!');
     }
 
     public function store_data(Request $request, $id)
@@ -63,13 +73,20 @@ class ProfileController extends Controller
             $client->occupation = $request->occupation;
             $client->update();
         } elseif (auth()->user()->hasRole('admin')) {
-            $user = User::find($id);
 
+            $user = User::find($id);
             $user->name = $request->name;
             $user->phone = $request->phone;
             $user->update();
-        }
+            // return $user;
+        } elseif (auth()->user()->hasRole('coach')) {
 
+            $user = User::find($id);
+            $user->name = $request->name;
+            $user->phone = $request->phone;
+            $user->update();
+            // return $user;
+        }
         return redirect(route('profil', Auth::user()->id));
     }
 
@@ -83,13 +100,17 @@ class ProfileController extends Controller
                 $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
                 $extension = $request->file('profil_picture')->getClientOriginalExtension();
                 $filenameSave = $filename . '_' . time() . '.' . $extension;
-                $path = $request->file('profil_picture')->storeAs('public/profil', $filenameSave);
+                if (Storage::disk('s3')->exists('images/profil_picture/' . $user->profil_picture)) {
+                    Storage::disk('s3')->delete('images/profil_picture/' . $user->profil_picture);
+                }
+                Storage::disk('s3')->put('images/profil_picture/' . $filenameSave, file_get_contents($request->file('profil_picture')));
+                // $path = $request->file('profil_picture')->storeAs('public/profil', $filenameSave);
                 $user->profil_picture = $filenameSave;
             }
         }
         $user->update();
 
-        return redirect(route('profil', Auth::user()->id))->with('success2', 'Foto profil berhasil diubah!');
+        return redirect(route('profil', Auth::user()->id));
     }
 
     public function update_background(Request $request)
@@ -102,12 +123,16 @@ class ProfileController extends Controller
                 $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
                 $extension = $request->file('background_picture')->getClientOriginalExtension();
                 $filenameSave = $filename . '_' . time() . '.' . $extension;
-                $path = $request->file('background_picture')->storeAs('public/background', $filenameSave);
+                if (Storage::disk('s3')->exists('images/background_picture/' . $user->background_picture)) {
+                    Storage::disk('s3')->delete('images/background_picture/' . $user->background_picture);
+                }
+                Storage::disk('s3')->put('images/background_picture/' . $filenameSave, file_get_contents($request->file('background_picture')));
+                // $path = $request->file('background_picture')->storeAs('public/background', $filenameSave);
                 $user->background_picture = $filenameSave;
             }
         }
         $user->update();
 
-        return redirect(route('profil', Auth::user()->id))->with('success2', 'Background berhasil diubah!');
+        return redirect(route('profil', Auth::user()->id));
     }
 }
